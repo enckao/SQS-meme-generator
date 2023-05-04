@@ -1,0 +1,12 @@
+.card {
+  max-width: calc(100vh / 4);
+  margin: 0;
+}
+
+.media {
+  height: 180px;
+}
+
+.MuiDialogContent-root {
+  text-align: center;
+}
