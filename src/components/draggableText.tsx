@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { DraggableState, DraggableTextProps } from '../types.ts';
 
 const DraggableText = React.memo(
@@ -21,25 +21,22 @@ const DraggableText = React.memo(
       }));
     };
 
-    const onMouseMove = useCallback(
-      (e: React.MouseEvent<SVGTextElement, MouseEvent>) => {
-        const rect = imageRef?.getBoundingClientRect();
-        if (!dragState.isDown || !rect) return;
-        const { left: rectLeft, top: rectTop } = rect;
-        const { clientX, clientY } = e;
-        const xOffset = clientX - rectLeft;
-        const yOffset = clientY - rectTop;
+    const onMouseMove = (e: React.MouseEvent<SVGTextElement, MouseEvent>) => {
+      const rect = imageRef?.getBoundingClientRect();
+      if (!dragState.isDown || !rect) return;
+      const { left: rectLeft, top: rectTop } = rect;
+      const { clientX, clientY } = e;
+      const xOffset = clientX - rectLeft;
+      const yOffset = clientY - rectTop;
 
-        setDragState((prevDragState) => ({
-          ...prevDragState,
-          posX: `${xOffset}px`,
-          posY: `${yOffset}px`,
-          screenX: e.screenX,
-          screenY: e.screenY,
-        }));
-      },
-      [dragState.isDown, imageRef]
-    );
+      setDragState((prevDragState) => ({
+        ...prevDragState,
+        posX: `${xOffset}px`,
+        posY: `${yOffset}px`,
+        screenX: e.screenX,
+        screenY: e.screenY,
+      }));
+    };
 
     const onMouseUp = () => {
       setDragState((prevDragState) => ({

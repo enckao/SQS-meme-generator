@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -75,6 +75,16 @@ export default function DialogCreator({
     setMemeText({ topText: '', bottomText: '' });
   };
 
+  const handleChangeText = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: string) => {
+      setMemeText((prevMemeText) => ({
+        ...prevMemeText,
+        [index]: event.target?.value,
+      }));
+    },
+    []
+  );
+
   return (
     <Dialog
       open={open}
@@ -125,12 +135,7 @@ export default function DialogCreator({
           name="topText"
           label="Top Text"
           type="text"
-          onChange={(event) =>
-            setMemeText((prevMemeText) => ({
-              ...prevMemeText,
-              topText: event.target?.value,
-            }))
-          }
+          onChange={(e) => handleChangeText(e, 'topText')}
           fullWidth
         />
         <TextField
@@ -140,12 +145,7 @@ export default function DialogCreator({
           name="bottomText"
           label="Bottom Text"
           type="text"
-          onChange={(event) =>
-            setMemeText((prevMemeText) => ({
-              ...prevMemeText,
-              bottomText: event.target?.value,
-            }))
-          }
+          onChange={(e) => handleChangeText(e, 'bottomText')}
           size="medium"
           fullWidth
         />
